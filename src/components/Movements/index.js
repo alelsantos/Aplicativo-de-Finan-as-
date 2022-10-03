@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 
-import { MotView, AnimatePresence, MotiText} from 'moti'
+import { MotiView, AnimatePresence, MotiText} from 'moti'
 export default function Movements ({data}) {
     const [showValue, setshowValue] = useState(false);
 return (
@@ -13,28 +13,48 @@ return (
         <Text sytle= {sytles.label}>{data.label}</Text>
 
         { showValue ? (
-            <AnimatePresence>
-                <Text
+            <AnimatePresence exitBeforeEnter>
+                <MotiText
         sytle={data.type === 1 ? style.value : styles.expenses}
+        from={{
+            translateX:100,
+
+        }}
+        animate={{
+            translateX: 0
+
+        }}
+        transition={{
+            type: 'timing',
+            duration: 500,
+        }}
         >
             {data.type === 1 ? `R$ ${data.value} `: `R$ -${data.value}` }
         
-            </Text>
-            { showValue ? (
+            </MotiText>
+            </AnimatePresence>
+            { showValue ? ( 
 
-        <Text 
+      <MotiText
         sytle={data.type === 1 ? style.value : styles.expenses}
         >
             {data.type === 1 ? `R$ ${data.value} `: `R$ -${data.value}` }
-            </Text>
-            </AnimatePresence>
+            </MotiText>
+            
                     ) : (
-           <View style={styles.skeleton}>         
-           </View>
+                        <AnimatePresence exitBeforeEnter>
+           <MotiView 
+           style={styles.skeleton}
+           from={{Opacity:0}}
+           animate={{opacity: 1}}
+           transition={{type: 'timing'}}
+           >         
+           </MotiView>
+           </AnimatePresence>
      )}  
     </View>
     </TouchableOpacity>
-    <p>TESTE</p>
+  
     );
     }
 
